@@ -1,0 +1,26 @@
+org: rajivmehtaflex
+app: gsqswithpython
+service: aws-snowflake-issue
+configValidationMode: error
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  environment:
+    USER_NAME: ${param:USER_NAME} 
+    REGION: ${param:REGION} 
+    PASSWORD: ${param:PASSWORD} 
+    ACCOUNT_IDENTIFIER: ${param:ACCOUNT_IDENTIFIER} 
+
+
+constructs:
+  jobs:
+    type: queue
+    worker:
+      handler: handler.consumer
+
+
+plugins:
+  - serverless-python-requirements
+  - serverless-lift
